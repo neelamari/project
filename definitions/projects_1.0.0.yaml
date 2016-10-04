@@ -1,0 +1,245 @@
+swagger: '2.0'
+info:
+  title: projectApi
+  description: Intake Project
+  version: 1.0.0
+host: mybluemix.com
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /projects:
+    get:
+      summary: Project Types
+      description: The Projects available
+      parameters:
+        - name: userName
+          in: query
+          description: Username.
+          required: true
+          type: string
+        - name: accessToken
+          in: query
+          description: Accesstoken.
+          required: true
+          type: string
+      tags:
+        - Projects
+      responses:
+        '200':
+          description: An array of projects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Project'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /projects/id:
+    get:
+      summary: Project Details by id
+      description: |
+        The project details will be listed by id
+      parameters:
+        - name: projectId
+          in: query
+          description: >-
+            Unique identifier representing a specific project. For example,
+            CDTS001114.
+          required: true
+          type: string
+        - name: accessToken
+          in: query
+          description: Accesstoken.
+          required: true
+          type: string
+        - name: userName
+          in: query
+          description: Username.
+          required: true
+          type: string
+      tags:
+        - ProjectDetails
+      responses:
+        '200':
+          description: An array of project details by product
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Project'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Project:
+    type: object
+    properties:
+      projectId:
+        type: string
+        description: >-
+          Unique identifier representing a specific project. For example,
+          CDTS001114.
+      projectName:
+        type: string
+        description: Name of project.
+      intakeDate:
+        type: string
+        description: Intake date of product.
+      projectWorkflow:
+        type: object
+        properties:
+          status:
+            type: string
+            description: status details
+          comment:
+            type: string
+            description: comment details
+          name:
+            type: string
+            description: name details
+          createdDate:
+            type: string
+            description: createdDate details
+          isActive:
+            type: string
+            description: isActive details
+        description: 'status,comment,name,createdDate,isActive will be stored.'
+      requestorName:
+        type: string
+        description: Requestor of product.
+      emailId:
+        type: string
+        description: Emailid of product.
+      priority:
+        type: string
+        description: priority of product.
+      isFundingApproved:
+        type: string
+        description: isFundingApproved
+      anticipatedBudget:
+        type: string
+        description: anticipated budget
+      requestedStartDate:
+        type: string
+        description: requested start date
+      requestedEndDate:
+        type: string
+        description: requested end date
+      projectType:
+        type: string
+        description: projectType
+      kpaAlignedStrategicInitiative:
+        type: string
+        description: kpaAlignedStrategicInitiative
+      sponsor:
+        type: array
+        items:
+          $ref: '#/definitions/Sponsor'
+        description: sponsor array
+      EMT Lead:
+        type: array
+        items:
+          $ref: '#/definitions/Leads'
+        description: leads array
+      scopeStatement:
+        type: string
+        description: scopeStatement
+      reasonForRequest/businessBenefit:
+        type: string
+        description: reasonForRequest
+      regionsImpacted:
+        type: array
+        items:
+          $ref: '#/definitions/RegionsImpacted'
+      applicationsDepartmentsImpacted:
+        type: array
+        items:
+          $ref: '#/definitions/ApplicationDepartmentsImpacted'
+      tssServicesImpacted:
+        type: array
+        items:
+          $ref: '#/definitions/tssServicesImpacted'
+      emtPrimaryOwner:
+        type: array
+        items:
+          $ref: '#/definitions/EmtPrimaryOwner'
+      projectDevelopmentType:
+        type: string
+      budget:
+        type: string
+      benefit:
+        type: string
+      roi:
+        type: string
+  EmtPrimaryOwner:
+    type: object
+    properties:
+      name:
+        type: string
+        description: EmtPrimaryOwner
+  tssServicesImpacted:
+    type: object
+    properties:
+      tssService:
+        type: array
+        description: details
+        items:
+          $ref: '#/definitions/TssService'
+  TssService:
+    type: string
+    properties:
+      name:
+        type: string
+        description: TssService details
+  ApplicationDepartmentsImpacted:
+    type: object
+    properties:
+      department_name:
+        type: string
+        description: Department Name details
+      application:
+        type: array
+        description: Application details
+        items:
+          $ref: '#/definitions/ApplicationDetails'
+  ApplicationDetails:
+    type: string
+    properties:
+      name:
+        type: string
+        description: applicationDetails details
+  Sponsor:
+    type: object
+    properties:
+      sponsor_name:
+        type: string
+        description: Sponsor name details
+      sponsor_type:
+        type: string
+        description: Sponsor type details
+  Leads:
+    type: string
+    properties:
+      name:
+        type: string
+        description: Leads name details
+  RegionsImpacted:
+    type: string
+    properties:
+      name:
+        type: string
+        description: RegionsImpacted details
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
