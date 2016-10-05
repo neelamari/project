@@ -1,0 +1,141 @@
+//projects document 
+//Endpoint: services/v1/project
+{
+  "project": {
+    "id": "CDT12312312",    // ID of project                     
+    "name": "Kp Ambassador",    // name of project 
+    "priority": "{high/medium/low}",    // project priority 
+    "fundingApproved": "{yes/no/pending}",  // funding status 
+    "requestorName": "Amy",  // Requestor Name for whom the project is submitted
+    "requestorEmail": "A.A.Katz@kp.org",  // Requestor email for whom the project is submitted
+    "submittedDate" : "2016-08-24",    // Project submitted date
+    "details" : {
+        "anticipatedBudget" : "$10000",
+        "requestedStartDate" : "2016-10-10",
+        "requestedEndDate" : "2016-10-10",
+        "emtLead":"John H. Klein",
+        "emtPrimaryOwner":"John H. Klein",
+        "projectType" :"Design",
+        "kpaAlignedStrategicInitiative":"{Perform/Grow/Lead}",
+        "scope" : "object and scope of the project",
+        "reason" : "reason for request",
+        "executiveSponsor":"person name business sponser",
+        "businessSponsor": "person name IT sponsor",
+        "applicationsImpacted" :[ "application 2", "application 3" ],
+         "departmentImpacted" :[ "department 2", "department 3"],
+        "regionaImpacted" : [  22,2323,232,232,2323 ], // array of IDs 
+        "servicesImpacted" : ["ApplicationDevelopment","AgileCoaching","Demand Management", "Risk management" ]   
+    }, 
+    "assessment" : {
+        "emtLead":"John H. Klein",
+        "emtPrimaryOwner" :"Design",
+        "impactedEMTTeams" : [
+            "team 1",
+            "team 2",
+            "team 3"
+        ],
+        "projectDeprojectTypevelopmentType":"{Agile/Waterfall/NA}",
+        "budgetBenefit": [
+            {
+                "benefitAmount":"500",            
+                "benefitDescription" :"Legacy cost savings"
+            },
+            {
+                "benefitAmount":"500",            
+                "benefitDescription" :"Legacy cost savings"
+            }            
+        ]
+    },
+    "cmmments": {
+         [
+            { "comment1",  "description", "date", "commenter" },
+            { "comment1",  "description", "date", "commenter" }
+         ]
+    }
+  }
+}
+
+
+//projects form data document 
+//this includes all data which is dynamic 
+//Endpoint: services/v1/projectFormData
+
+{
+      "services" : {
+            {"_id":"ApplicationDevelopment", "parent":"tssServices"}.
+            {"_id":"tssServices", "parent":null}.
+      }
+}
+
+
+//example 
+// just do a generic tree with parent references
+
+db.categories.insert( { _id: "ApplicationDevelopment", parent: "tssServices" } )
+db.categories.insert( { _id: "Agile Coaching", parent: "tssServices" } )
+db.categories.insert( { _id: "Demand management", parent: "serviceIntegrationManagement" } )
+db.categories.insert( { _id: "Service Level management", parent: "serviceIntegrationManagement" } )
+db.categories.insert( { _id: "Risk management", parent: "serviceIntegrationManagement" } )
+db.categories.insert( { _id: "tssServices", parent: null } )
+db.categories.insert( { _id: "serviceIntegrationManagement", parent: null } )
+db.categories.insert( { _id: "testingCenterOfExcellence", parent: null } )
+db.categories.insert( { _id: "usabilityServiceOfExcellence", parent: null } )
+
+//finding parent
+db.categories.findOne( { _id: "ApplicationDevelopment" } ).parent
+db.categories.createIndex( { parent: 1 } )
+//find children
+db.categories.find( { parent: "tssServices" } )
+
+//regions document
+//this includes all data which is dynamic 
+//Endpoint: services/v1/regions
+
+{
+    "regions" : [
+        "region1",
+        "region2",
+        "region3",
+        "all"
+    ]
+}
+
+//EMT Leads and Owners document
+//this includes list of users with role EMT Owner and Lead  
+//Endpoint: services/v1/roles
+
+{
+"roles": {    
+   "emtPrimaryOwner": [
+      "Ash Tengshe",
+      "Simon Nazarin",
+      "Doug Eastman",
+      "Kevin Isbell",
+      "Jeff Randall",
+      "Will Harper"
+    ],
+  "emtLead": [
+      "Ash Tengshe",
+      "Simon Nazarin",
+      "Doug Eastman",
+      "Kevin Isbell",
+      "Jeff Randall",
+      "Shyam Baskar"
+    ],
+}}
+
+
+//ProjectHistory Audit design . baskar to finalize
+//to be designed
+//this is not sufficient for an audit history 
+//NOT NEEDED for now.
+{
+  "projectWorkflow": {    
+      "status":"underEMT review",
+      "comment": "Comment detail",
+      "name":"Amit",
+      "createdDate": "Date",
+      "isActive":"yes"
+    }
+}    
+
